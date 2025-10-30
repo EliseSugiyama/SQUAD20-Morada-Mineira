@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chatbot Confeitaria 🍰</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body { background: #f8f9fa; }
+    #chatbox { height: 60vh; overflow-y: auto; border: 1px solid #ccc; padding: 12px; background: white; position: relative; }
+    .bot { text-align: left; color: #0d6efd; margin: 8px 0; }
+    .user { text-align: right; color: #198754; margin: 8px 0; }
+    .options { margin-top: 6px; }
+    .options button { margin: 2px; }
+    .msg { white-space: pre-line; }
+    .product-card { display: flex; gap: 12px; align-items: flex-start; margin-top: 6px; }
+    .product-card img { width: 80px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid #ddd; }
+    .product-info { flex: 1; }
+    .small-desc { color: #6c757d; font-size: 0.9rem; margin-top: 4px; }
+    .options-inline { margin-top: 8px; padding: 8px; border-radius: 6px; background:#f1f3f5; border:1px solid #e9ecef; }
+    .options-inline .form-check { margin-bottom: 6px; }
+    .toggle-options-btn { margin-left: 8px; }
+    .no-selection-note { margin-top:6px; }
+
+    /* Main options styling */
+    #mainOptions {
+      background: #ffffff;
+      padding: 8px;
+      border-top: 1px solid #e9ecef;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    #mainOptions .btn { padding: 6px 8px; font-size: 0.85rem; }
+  </style>
+</head>
+<body class="container py-4">
+  <h2>Chatbot da Confeitaria 🍩</h2>
+
+  <div id="chatbox">
+    <div class="bot msg"><b>🤖 Bot:</b> Olá! O que você gostaria de fazer?</div>
+    <div class="options bot" id="mainOptions"></div>
+  </div>
+
+  <div class="input-group mt-3">
+    <input id="userInput" type="text" class="form-control" placeholder="Digite: cardápio, mais vendidos, carrinho, finalizar" />
+    <button class="btn btn-primary" id="sendBtn">Enviar</button>
+  </div>
+
+  <script>
+    const chatbox = document.getElementById("chatbox");
+    const sendBtn = document.getElementById("sendBtn");
+    const userInput = document.getElementById("userInput");
+    let globalMenu = [];
+
+    /* renderMainOptions: sempre cria/atualiza #mainOptions e ANEXA como último filho do chatbox (não reposiciona) */
+    function renderMainOptions() {
+      let main = document.getElementById("mainOptions");
+
+      if (!main) {
+        main = document.createElement("div");
+        main.id = "mainOptions";
+        main.className = "options bot";
+        // anexar como último filho do chatbox, garantindo que fique no fim do DOM
+        chatbox.appendChild(main);
+      }
+
+      // Preenche os botões (idempotente)
+      main.innerHTML = `
+        <button class="btn btn-outline-primary btn-sm" onclick="handleOption('cardápio')">📖 Ver cardápio</button>
+        <button class="btn btn-outline-success btn-sm" onclick="handleOption('mais vendidos')">⭐ Mais vendidos</button>
+        <button class="btn btn-outline-warning btn-sm" onclick="handleOption('carrinho')">🛒 Ver carrinho</button>
+        <button class="btn btn-outline-danger btn-sm" onclick="handleOption('finalizar')">✅ Finalizar orçamento</button>
+      `;
+    }
+
+    renderMainOptions();
+
+    /* addMessage: insere mensagem ANTES do mainOptions quando existir, sem mover mainOptions */
+    function addMessage(from, text) {
+      const div = document.createElement("div");
+      div.className = from + " msg";
+      div.innerHTML = `<b>${from === "bot" ? "🤖 Bot" : "Você"}:</b> ${text}`;
+
+      const main = document.getElementById("mainOptions");
+      if (main && main.parentNode === chatbox) {
+        // insere a mensagem antes de mainOptions para que os botões permaneçam no fim
+        chatbox.insertBefore(div, main);
+      } else {
+        chatbox.appendChild(div);
+      }
+
+      // garantir que #mainOptions exista (mas sem movê-lo)
+      renderMainOptions();
+
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function handleOption(option) {
+      userInput.value = option;
+      sendMessage();
+    }
+
+    function getImageSrc(item) {
+      const src = (item && item.image && item.image.trim()) ? item.image : "/static/images/PlaceHolder.jpg";
+      return src;
+    }
+
+    /* createProductCard: sempre cria container .options-inline dentro do card */
+    function createProductCard(item) {
+      const src = getImageSrc(item);
+      const div = document.createElement("div");
+      div.className = "bot msg";
+
+      div.innerHTML = `
+        <div class="product-card" id="product-card-${item.id}">
+          <img src="${src}" alt="${item.name}" />
+          <div class="product-info">
+            <div><b>${item.name}</b></div>
+            <div>R$ ${Number(item.base_price).toFixed(2)}</div>
+            ${item.description ? `<div class="small-desc">${item.description}</div>` : ""}
+            <div class="options mt-2">
+              <button class="btn btn-sm btn-success" data-action="toggle-options" data-id="${item.id}">Adicionar ao carrinho</button>
+            </div>
+            <div class="options-inline" id="options-inline-${item.id}" style="display:none;"></div>
+          </div>
+        </div>
+      `;
+      return div;
+    }
+
+    /* appendAfterMain: insere conteúdo ANTES do mainOptions se existir (preserva ordem) */
+    function appendAfterMain(element) {
+      const main = document.getElementById("mainOptions");
+      if (main && main.parentNode === chatbox) {
+        chatbox.insertBefore(element, main);
+      } else {
+        chatbox.appendChild(element);
+      }
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    /* toggleInlineOptions: rola para o card primeiro, depois abre painel (robusta) */
+    async function toggleInlineOptions(itemId) {
+      console.log("toggleInlineOptions called for id:", itemId);
+      const id = Number(itemId);
+      if (Number.isNaN(id)) {
+        console.warn("toggleInlineOptions: id is not a number:", itemId);
+        return;
+      }
+
+      if (!Array.isArray(globalMenu) || globalMenu.length === 0) {
+        try {
+          const res = await fetch("/menu");
+          globalMenu = await res.json();
+          console.log("toggleInlineOptions: reloaded globalMenu, length=", globalMenu.length);
+        } catch (err) {
+          console.error("toggleInlineOptions: erro ao recarregar menu", err);
+          return;
+        }
+      }
+
+      const item = globalMenu.find(p => Number(p.id) === id);
+      if (!item) {
+        console.warn("toggleInlineOptions: item not found in globalMenu for id:", id);
+        return;
+      }
+
+      if (!item.options || Object.keys(item.options).length === 0) {
+        await addToCart(item.id, {});
+        return;
+      }
+
+      const card = document.getElementById(`product-card-${id}`);
+      if (!card) {
+        console.warn("toggleInlineOptions: product card element not found for id:", id);
+        return;
+      }
+
+      // role para o card primeiro para evitar jumps para card antigo
+      try { card.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
+
+      // garante container dentro do card
+      let container = card.querySelector(`#options-inline-${id}`);
+      if (!container) {
+        container = document.createElement("div");
+        container.className = "options-inline";
+        container.id = `options-inline-${id}`;
+        container.style.display = "none";
+        const info = card.querySelector('.product-info') || card;
+        info.appendChild(container);
+      }
+
+      // fecha outros painéis
+      document.querySelectorAll('.options-inline').forEach(el => {
+        if (!el) return;
+        if (el.id === container.id) return;
+        el.style.display = 'none';
+        el.innerHTML = '';
+      });
+
+      if (container.style.display === "none" || container.style.display === "") {
+        container.innerHTML = "";
+        try {
+          renderInlineOptions(item, container);
+        } catch (err) {
+          console.error("toggleInlineOptions: erro em renderInlineOptions", err);
+          container.innerHTML = "<div class='text-danger small'>Erro ao carregar opções.</div>";
+        }
+
+        if (!container.innerHTML || container.innerHTML.trim() === "") {
+          container.innerHTML = "<div class='text-danger small'>Nenhuma opção disponível.</div>";
+        }
+
+        container.style.display = "block";
+        try { container.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
+        console.log("toggleInlineOptions: opened options for", item.name, "container id:", container.id);
+      } else {
+        container.style.display = "none";
+        container.innerHTML = "";
+        console.log("toggleInlineOptions: closed options for", item.name);
+      }
+    }
+
+    /* renderInlineOptions: cria radio/checkbox conforme type e suporta formatos de options */
+    function renderInlineOptions(item, container) {
+      if (!container) throw new Error("renderInlineOptions: container is null");
+      container.innerHTML = "";
+
+      if (!item.options || Object.keys(item.options).length === 0) {
+        addToCart(item.id, {});
+        return;
+      }
+
+      const type = (item.type && String(item.type).toLowerCase() === "single") ? "single" : "multiple";
+      const header = document.createElement("div");
+      header.innerHTML = `<i>Opções para <b>${item.name}</b>:</i>`;
+      container.appendChild(header);
+
+      Object.keys(item.options).forEach(optKey => {
+        const optGroup = item.options[optKey];
+        if (!optGroup || (typeof optGroup !== "object" && !Array.isArray(optGroup))) return;
+
+        const safeKey = encodeURIComponent(optKey);
+        const groupDiv = document.createElement("div");
+        groupDiv.className = "mt-2";
+        const title = document.createElement("div");
+        title.innerHTML = `<small><b>${optKey}:</b></small>`;
+        groupDiv.appendChild(title);
+
+        const createOptionRow = (labelText, extraVal, idx) => {
+          const idOpt = `${item.id}__${safeKey}__${idx}`;
+          const row = document.createElement("div");
+          row.className = "form-check";
+
+          const input = document.createElement("input");
+          input.type = (type === "single") ? "radio" : "checkbox";
+          input.name = `${item.id}__${safeKey}`;
+          input.className = "form-check-input";
+          input.id = idOpt;
+          input.value = labelText;
+          input.dataset.optKey = safeKey;
+          input.dataset.optExtra = String(extraVal ?? 0);
+
+          const label = document.createElement("label");
+          label.className = "form-check-label";
+          label.setAttribute("for", idOpt);
+          label.innerText = `${labelText} (+R$ ${Number(extraVal ?? 0).toFixed(2)})`;
+
+          row.appendChild(input);
+          row.appendChild(label);
+          return row;
+        };
+
+        if (Array.isArray(optGroup)) {
+          optGroup.forEach((opt, idx) => {
+            const labelText = (opt && typeof opt.label === "string") ? opt.label : null;
+            const extraVal = (opt && (opt.extra !== undefined)) ? opt.extra : 0;
+            if (labelText) groupDiv.appendChild(createOptionRow(labelText, extraVal, idx));
+          });
+        } else {
+          Object.keys(optGroup).forEach((labelText, idx) => {
+            const extraVal = optGroup[labelText];
+            groupDiv.appendChild(createOptionRow(labelText, extraVal, idx));
+          });
+        }
+
+        container.appendChild(groupDiv);
+      });
+
+      const confirmBtn = document.createElement("button");
+      confirmBtn.className = "btn btn-sm btn-success mt-2";
+      confirmBtn.innerText = "Confirmar seleção";
+      confirmBtn.onclick = async () => {
+        const chosenInputs = container.querySelectorAll("input:checked");
+        if (!chosenInputs || chosenInputs.length === 0) {
+          if (!container.querySelector(".no-selection-note")) {
+            const notice = document.createElement("div");
+            notice.className = "text-danger small no-selection-note mt-2";
+            notice.innerText = "Nenhuma opção selecionada.";
+            container.appendChild(notice);
+          }
+          return;
+        }
+
+        const selected = {};
+        chosenInputs.forEach(inp => {
+          const safeKey = inp.dataset.optKey;
+          const optKey = decodeURIComponent(safeKey);
+          if (!selected[optKey]) selected[optKey] = [];
+          selected[optKey].push(inp.value);
+        });
+
+        await addToCart(item.id, selected);
+        container.style.display = "none";
+        container.innerHTML = "";
+      };
+
+      container.appendChild(confirmBtn);
+    }
+
+    /* addToCart: adiciona via API, fecha painéis e garante renderMainOptions (sem reposicionamento) */
+    async function addToCart(id, options = {}) {
+      try {
+        const res = await fetch("/cart", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, options })
+        });
+        const data = await res.json();
+        if (data.error) {
+          addMessage("bot", `Erro: ${data.error}`);
+          renderMainOptions();
+          return;
+        }
+
+        addMessage("bot", `Produto adicionado ao carrinho. Subtotal: R$ ${Number(data.total).toFixed(2)}`);
+
+        // Fecha todos painéis e limpa conteúdo
+        document.querySelectorAll('.options-inline').forEach(el => { if (el) { el.style.display = 'none'; el.innerHTML = ''; } });
+
+        // garante que #mainOptions exista (sem movê-lo)
+        renderMainOptions();
+
+      } catch (err) {
+        console.error(err);
+        addMessage("bot", "Erro ao comunicar com o servidor.");
+        renderMainOptions();
+      }
+    }
+
+    async function removeFromCart(id) {
+      const res = await fetch(`/cart/${id}`, { method: "DELETE" });
+      const data = await res.json();
+      addMessage("bot", data.message);
+      await showCartSummary(true);
+      renderMainOptions();
+    }
+
+    async function showCartSummary(isUpdate = false) {
+      const res = await fetch("/cart");
+      const data = await res.json();
+
+      if (!isUpdate) addMessage("user", "carrinho");
+
+      if (!data.items || data.items.length === 0) {
+        addMessage("bot", "Seu carrinho está vazio.");
+        return;
+      }
+
+      const resumo = document.createElement("div");
+      resumo.className = "bot msg";
+      resumo.innerHTML = "<b>🤖 Bot:</b> Resumo do carrinho:";
+
+      data.items.forEach(i => {
+        const row = document.createElement("div");
+        row.className = "d-flex align-items-center justify-content-between mt-1";
+        const opts = i.selectedOptions && Object.keys(i.selectedOptions).length
+          ? " | " + Object.entries(i.selectedOptions).map(([k,v]) => `${k}: ${v.join(", ")}`).join(" ; ")
+          : "";
+        row.innerHTML = `
+          <span>- ${i.name}${opts}: R$ ${Number(i.total).toFixed(2)}</span>
+          <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${i.id})">Remover</button>
+        `;
+        resumo.appendChild(row);
+      });
+
+      const totalRow = document.createElement("div");
+      totalRow.className = "mt-2";
+      totalRow.innerHTML = `<b>Total: R$ ${Number(data.totalFinal).toFixed(2)}</b>`;
+      resumo.appendChild(totalRow);
+
+      appendAfterMain(resumo);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    /* sendMessage: usa appendAfterMain para inserir cards/resumos antes do mainOptions */
+    async function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+
+      addMessage("user", text);
+      const lower = text.toLowerCase();
+
+      if (lower.includes("cardápio")) {
+        const res = await fetch("/menu");
+        globalMenu = await res.json();
+        addMessage("bot", "Aqui está nosso cardápio:");
+
+        // preserva ordem do array: anexa cada card (inserindo antes de mainOptions)
+        globalMenu.forEach(item => {
+          const card = createProductCard(item);
+          appendAfterMain(card);
+        });
+        chatbox.scrollTop = chatbox.scrollHeight;
+      }
+      else if (lower.includes("mais vendidos")) {
+        const res = await fetch("/menu");
+        globalMenu = await res.json();
+        const bestsellers = globalMenu.filter(i => i.bestseller);
+
+        if (bestsellers.length === 0) {
+          addMessage("bot", "Não há itens marcados como mais vendidos.");
+        } else {
+          addMessage("bot", "Nossos mais pedidos são:");
+          bestsellers.forEach(item => {
+            const card = createProductCard(item);
+            appendAfterMain(card);
+          });
+          chatbox.scrollTop = chatbox.scrollHeight;
+        }
+      }
+      else if (lower.includes("carrinho")) {
+        await showCartSummary();
+      }
+      else if (lower.includes("finalizar") || lower.includes("fechar")) {
+        const resCart = await fetch("/cart");
+        const cartData = await resCart.json();
+
+        if (!cartData.items || cartData.items.length === 0) {
+          addMessage("bot", "Seu carrinho está vazio, não há nada para finalizar.");
+        } else {
+          let resumo = "Resumo final do orçamento:\n";
+          cartData.items.forEach(i => resumo += `- ${i.name}: R$ ${Number(i.total).toFixed(2)}\n`);
+          resumo += `\nTotal: R$ ${Number(cartData.totalFinal).toFixed(2)}`;
+          addMessage("bot", resumo);
+
+          await fetch("/cart", { method: "DELETE" });
+          addMessage("bot", "✅ Orçamento finalizado! O carrinho foi limpo.");
+          renderMainOptions();
+        }
+      }
+      else {
+        addMessage("bot", "Não entendi. Use os botões abaixo ou digite: 'cardápio', 'mais vendidos', 'carrinho' ou 'finalizar'.");
+      }
+
+      userInput.value = "";
+      renderMainOptions();
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    /* Delegation global: captura cliques nos botões "Adicionar ao carrinho" */
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest('button[data-action="toggle-options"]');
+      if (!btn) return;
+      const id = btn.dataset.id ?? btn.getAttribute("data-id");
+      toggleInlineOptions(id);
+    });
+
+    sendBtn.addEventListener("click", sendMessage);
+    userInput.addEventListener("keypress", (e) => { if (e.key === "Enter") sendMessage(); });
+  </script>
+</body>
+</html>
