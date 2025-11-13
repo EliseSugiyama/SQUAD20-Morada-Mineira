@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Morada Mineira ChatBot</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="main-layout">
+      <!-- Área de conteúdo do site (esquerda) -->
+      <div class="website-area">
+        <p style="color: #999; text-align: center; padding-top: 40px;">O fundo seria o site</p>
+      </div>
+
+      <!-- Área de chat (lado direito) -->
+      <div class="chat-container">
+        <div class="chat-header">
+          <div class="header-top">
+            <div class="bot-profile">
+              <img src="/static/images/MimoBot.png" alt="Bot" class="header-avatar" />
+              <span class="bot-name">Morada Mineira ChatBot</span>
+            </div>
+            <div class="header-options">
+              <button class="opt-header" id="btn-menu">Menu</button>
+              <button class="opt-header" id="btn-best">Favoritos</button>
+              <button class="opt-header" id="btn-suggest">Sugestões</button>
+              <button class="opt-header" id="btn-cart">Carrinho</button>
+              <button class="opt-header" id="btn-support">Ajuda</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="chat" class="chat">
+          <div class="bot-msg">
+            <img src="/static/images/MimoBot.png" alt="Bot" class="bot-avatar" />
+            <div class="message-bubble">
+              <div class="message-text">Olá! Posso te ajudar com o menu, carrinho, sugestões ou finalizar sua compra.</div>
+              <div class="message-time">Agora</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <input id="user-input" class="user-input" placeholder="Escreva uma mensagem..." />
+          <button id="send">Enviar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para adicionar item ao carrinho -->
+    <div id="addModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <p id="modalDesc"></p>
+        <div id="optionsContainer"></div>
+        <div class="quantity-row">
+          <label>Quantidade:</label>
+          <input type="number" id="quantityInput" value="1" min="1" />
+        </div>
+        <div class="modal-buttons">
+          <button id="addToCartBtn" class="btn-primary">Adicionar ao Carrinho</button>
+          <button id="cancelBtn" class="btn-secondary">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para ver/editar carrinho -->
+    <div id="cartModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Seu Carrinho</h2>
+        <div id="cartItems"></div>
+        <div class="cart-total">Total: <span id="cartTotal">R$0,00</span></div>
+        <div class="modal-buttons">
+          <button id="checkoutBtn" class="btn-primary">Finalizar Compra</button>
+          <button id="closecartBtn" class="btn-secondary">Continuar Comprando</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const COMPANY_WEBSITE = '{{ company_website }}';
+    </script>
+    <script src="/static/script.js"></script>
+  </body>
+</html>
