@@ -31,8 +31,8 @@ Como solução, desenvolvemos um **chatbot web** com perguntas pré-programadas 
 
 ## Utilização
 
-- **Menu**: Clique em "Menu" para ver todos os produtos
-- **Favoritos**: Clique em "Favoritos" para ver os mais vendidos
+- **Menu**: Clique em "Menu" para ver as categorias e depois escolha os produtos
+- **Favoritos**: Clique em "Favoritos" para ver categorias de produtos mais vendidos
 - **Sugestões**: Clique em "Sugestões" e forneça: quantidade, tipo de evento, local (ex: "10, casamento, São Paulo")
 - **Carrinho**: Clique em "Carrinho" para visualizar e editar seus itens
 - **Finalizar**: Complete a compra e envie pelo WhatsApp
@@ -50,24 +50,24 @@ Como solução, desenvolvemos um **chatbot web** com perguntas pré-programadas 
 .
 ├── app.py                # Servidor Flask e API
 ├── db.sqlite             # Banco de dados SQLite
-├── requerimentos.txt     # Dependências Python
+├── requirements.txt      # Dependências Python
+├── Procfile              # Configuração para deploy
 ├── README.md             # Este arquivo
 ├── static/
 │   ├── style.css         # Estilos CSS
 │   ├── script.js         # Lógica JavaScript
-│   └── images/
-│       └── MimoBot.png   # Avatar do bot
+│   └── images/           # Imagens (bot, produtos, fundo)
+│       └── MoradaMineira.png
 └── templates/
     └── index.html        # Interface principal
 ```
-  
 ## Como executar
 
 ### Pré-requisitos
 - Python 3.7+
 - pip
 
-### Instalação
+### Instalação Local
 
 1. Clone ou baixe o projeto
 2. Abra o PowerShell no diretório do projeto
@@ -76,12 +76,30 @@ Como solução, desenvolvemos um **chatbot web** com perguntas pré-programadas 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install -r requerimentos.txt
+pip install -r requirements.txt
 python app.py
 ```
 
-4. Acesse `http://localhost:5000` no navegadort
-python app.py
+4. Acesse `http://localhost:5000` no navegador
+
+## Deploy Online
+
+O projeto está pronto para fazer deploy em plataformas como:
+
+### Render.com (Recomendado - Gratuito)
+1. Acesse [render.com](https://render.com)
+2. Faça login com GitHub
+3. Clique "New Web Service"
+4. Selecione o repositório
+5. Configure:
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `gunicorn app:app`
+6. Clique "Deploy"
+
+### Outras opções
+- **Railway.app**: Gratuito com créditos
+- **PythonAnywhere**: Plano gratuito disponível
 
 ## Licença
+Este projeto está licenciado sob a [MIT License](LICENSE).
 Este projeto está licenciado sob a [MIT License](LICENSE).
