@@ -13,13 +13,17 @@ body {
 
 .website-area {
   flex: 1;
-  background: #fff;
+  background-image: url('/static/images/MoradaMineira.png') !important;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
   padding: 20px;
   overflow-y: auto;
 }
 
 .chat-container {
-  width: 420px;
+  width: 480px;
   background: #fff;
   display: flex;
   flex-direction: column;

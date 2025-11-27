@@ -59,22 +59,52 @@ async function sendMessage(text) {
 }
 
 async function openMenu() {
-  const res = await fetch('/api/menu');
+  const res = await fetch('/api/categories');
   const j = await res.json();
-  currentMenu = j.menu;
   const chat = document.getElementById('chat');
   const div = document.createElement('div');
   div.className = 'bot-msg';
   div.innerHTML = `
     <img src="/static/images/MimoBot.png" alt="Bot" class="bot-avatar" />
     <div class="message-bubble">
-      <div class="message-text"><strong>Selecione um item para adicionar ao carrinho:</strong></div>
+      <div class="message-text"><strong>Selecione uma categoria:</strong></div>
       <div class="message-time">${getTimeString()}</div>
     </div>
   `;
   chat.appendChild(div);
   
-  j.menu.forEach(it => {
+  j.categories.forEach(category => {
+    const categoryBtn = document.createElement('button');
+    categoryBtn.style.cssText = 'margin:6px;padding:10px 14px;background:#FF7800;color:#fff;border:0;border-radius:4px;cursor:pointer;font-weight:bold;flex:1;min-width:100px;';
+    categoryBtn.textContent = category;
+    categoryBtn.onclick = () => openMenuByCategory(category);
+    chat.appendChild(categoryBtn);
+  });
+  
+  const backDiv = document.createElement('div');
+  backDiv.style.cssText = 'display:flex;gap:6px;margin:6px 0;flex-wrap:wrap;';
+  chat.appendChild(backDiv);
+  
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function openMenuByCategory(category) {
+  const res = await fetch(`/api/category/${encodeURIComponent(category)}`);
+  const j = await res.json();
+  currentMenu = j.items;
+  const chat = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'bot-msg';
+  div.innerHTML = `
+    <img src="/static/images/MimoBot.png" alt="Bot" class="bot-avatar" />
+    <div class="message-bubble">
+      <div class="message-text"><strong>${category}:</strong></div>
+      <div class="message-time">${getTimeString()}</div>
+    </div>
+  `;
+  chat.appendChild(div);
+  
+  j.items.forEach(it => {
     const itemDiv = document.createElement('div');
     itemDiv.className = 'menu-item';
     itemDiv.innerHTML = `
@@ -86,26 +116,59 @@ async function openMenu() {
     `;
     chat.appendChild(itemDiv);
   });
+  
+  const backBtn = document.createElement('button');
+  backBtn.style.cssText = 'margin-top:8px;padding:8px 12px;background:#95a5a6;color:#fff;border:0;border-radius:4px;cursor:pointer;font-weight:bold;width:100%;';
+  backBtn.textContent = '← Voltar ao Menu';
+  backBtn.onclick = openMenu;
+  chat.appendChild(backBtn);
+  
   chat.scrollTop = chat.scrollHeight;
 }
 
 async function openBestSellers(){
-  const res = await fetch('/api/best_sellers');
+  const res = await fetch('/api/best_sellers_categories');
   const j = await res.json();
-  currentMenu = j.best_sellers;
   const chat = document.getElementById('chat');
   const div = document.createElement('div');
   div.className = 'bot-msg';
   div.innerHTML = `
     <img src="/static/images/MimoBot.png" alt="Bot" class="bot-avatar" />
     <div class="message-bubble">
-      <div class="message-text"><strong>Nossos Favoritos:</strong></div>
+      <div class="message-text"><strong>Selecione uma categoria de favoritos:</strong></div>
       <div class="message-time">${getTimeString()}</div>
     </div>
   `;
   chat.appendChild(div);
   
-  j.best_sellers.forEach(b => {
+  j.categories.forEach(category => {
+    const categoryBtn = document.createElement('button');
+    categoryBtn.style.cssText = 'margin:6px;padding:10px 14px;background:#FF7800;color:#fff;border:0;border-radius:4px;cursor:pointer;font-weight:bold;flex:1;min-width:100px;';
+    categoryBtn.textContent = category;
+    categoryBtn.onclick = () => openBestSellersByCategory(category);
+    chat.appendChild(categoryBtn);
+  });
+  
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function openBestSellersByCategory(category) {
+  const res = await fetch(`/api/best_sellers_category/${encodeURIComponent(category)}`);
+  const j = await res.json();
+  currentMenu = j.items;
+  const chat = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'bot-msg';
+  div.innerHTML = `
+    <img src="/static/images/MimoBot.png" alt="Bot" class="bot-avatar" />
+    <div class="message-bubble">
+      <div class="message-text"><strong>Favoritos - ${category}:</strong></div>
+      <div class="message-time">${getTimeString()}</div>
+    </div>
+  `;
+  chat.appendChild(div);
+  
+  j.items.forEach(b => {
     const itemDiv = document.createElement('div');
     itemDiv.className = 'menu-item';
     itemDiv.innerHTML = `
@@ -117,6 +180,13 @@ async function openBestSellers(){
     `;
     chat.appendChild(itemDiv);
   });
+  
+  const backBtn = document.createElement('button');
+  backBtn.style.cssText = 'margin-top:8px;padding:8px 12px;background:#95a5a6;color:#fff;border:0;border-radius:4px;cursor:pointer;font-weight:bold;width:100%;';
+  backBtn.textContent = '← Voltar aos Favoritos';
+  backBtn.onclick = openBestSellers;
+  chat.appendChild(backBtn);
+  
   chat.scrollTop = chat.scrollHeight;
 }
 

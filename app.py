@@ -100,49 +100,345 @@ def seed_sample_data(conn):
     "name": "Marta Rocha",
     "description": "A melhor Marta Rocha do mundo! Resultado de muita pesquisa, dedicação e amor da nossa Chef Confeiteira. Baba de moça, suspiros, praliné de castanha de caju e nozes no pão de ló branco, coberto com muito suspiro. E que suspiro!",
     "image": "/static/images/MartaRocha.jpg",
-    "base_price": 98.00,
+    "base_price": 0.00,
     "bestseller": True,
     "options": {
       "tamanho": [
-        { "label": "1.0 kg", "extra": 0.00 },
-        { "label": "1.5 kg", "extra": 49.00 },
-        { "label": "2.0 kg", "extra": 98.00 },
-        { "label": "3.0 kg", "extra": 196.00 }
+        { "label": "1.0 kg", "extra": 98.00 },
+        { "label": "1.5 kg", "extra": 147.00 },
+        { "label": "2.0 kg", "extra": 196.00 },
+        { "label": "3.0 kg", "extra": 294.00 }
       ], 
       "type": "single"
     },
-    "faqs": [
-      { "q": "Quais tamanhos disponíveis?", "a": "1.0 kg, 1.5 kg, 2.0 kg e 3.0 kg." },
-      { "q": "Qual o recheio do bolo?", "a": "Baba de moça, suspiros, praliné de castanha de caju e nozes no pão de ló branco, coberto com muito suspiro." }
-    ]
   },
 
   {
     "id": 2,
-    "category": "Tortas",
-    "name": "Torta prestígio mesclada",
-    "description": "Recheio de creme de coco. Cobertura de marshmallow mesclado com calda de chocolate. Massa pão de ló de chocolate.",
-    "image": "/static/images/PrestigioMesclada.jpg",
-    "base_price": 94.00,
+    "category": "Tortas Especialidades",
+    "name": "Cascata de Morango",
+    "description": "Recheio de creme de brigadeiro com morangos frescos. Cobertura de morangos frescos, geleia de morango e chocolate. Pão de ló chocolate.Recheio de creme de brigadeiro com morangos frescos. Cobertura de morangos frescos, geleia de morango e chocolate. Pão de ló chocolate.",
+    "image": "/static/images/PlaceHolder.jpg",
+    "base_price": 0.00,
     "bestseller": True,
     "options": {
       "tamanho": [
-        { "label": "1.0 kg", "extra": 0.00 },
-        { "label": "1.5 kg", "extra": 47.00 },
-        { "label": "2.0 kg", "extra": 94.00 },
-        { "label": "3.0 kg", "extra": 188.00 }
+        { "label": "1.5 kg", "extra": 178.49 },
+        { "label": "2.0 kg", "extra": 238.00 },
+        { "label": "2.5 kg", "extra": 297.50 },
+        { "label": "3.0 kg", "extra": 357.00 }
+      ], 
+      "type": "single"
+    },
+  },
+
+  {
+    "id": 3,
+    "category": "Tortas Especialidades",
+    "name": "Morango Espelhada",
+    "description": "Recheio de baba de moça, chantilly, geleia de morango e suspiro. Cobertura de morangos frescos e geleia de morango. Pão de ló branco.",
+    "image": "/static/images/PlaceHolder.jpg",
+    "base_price": 0.00,
+    "bestseller": False,
+    "options": {
+      "tamanho": [
+        { "label": "1.5 kg", "extra": 163.50 },
+        { "label": "2.0 kg", "extra": 218.00 },
+        { "label": "3.0 kg", "extra": 327.00 }
+      ], 
+      "type": "single"
+    },
+  },
+
+  {
+    "id": 4,
+    "category": "Tortas Especialidades",
+    "name": "Bia",
+    "description": "Leve, deliciosa e bela são algumas das qualidades dessa torta que todos já conhecem pelo nome. Baba de moça, morangos frescos e pão de ló branco, coberto com morangos, geleia de morango, suspiro e chantilly.Leve, deliciosa e bela são algumas das qualidades dessa torta que todos já conhecem pelo nome. Baba de moça, morangos frescos e pão de ló branco, coberto com morangos, geleia de morango, suspiro e chantilly.",
+    "image": "/static/images/PlaceHolder.jpg",
+    "base_price": 0.00,
+    "bestseller": False,
+    "options": {
+      "tamanho": [
+        { "label": "1.3 kg", "extra": 141.70 },
+        { "label": "2.0 kg", "extra": 218.00 },
+        { "label": "3.0 kg", "extra": 327.00 }
+      ], 
+      "type": "single"
+    },
+  },
+
+  {
+    "id": 5,
+    "category": "Tortas Especialidades",
+    "name": "Extravagance",
+    "description": "Uma combinação de dar água na boca. Creme de chocolate trufado, baba de moça, morangos frescos, no pão de ló de chocolate, coberto com ganache e muitas frutas vermelhas.",
+    "image": "/static/images/Extravagance.jpg",
+    "base_price": 0.00,
+    "bestseller": False,
+    "options": {
+      "tamanho": [
+        { "label": "1.5 kg", "extra": 208.50 },
+        { "label": "2.0 kg", "extra": 278.00 },
+        { "label": "3.0 kg", "extra": 417.00 }
+      ], 
+      "type": "single"
+    },
+  },
+
+  {
+    "id": 6,
+    "category": "Tortas Especialidades",
+    "name": "Sublime",
+    "description": "Baba de moça, creme trufado de chocolate branco, variegato de amarena e mousse de chocolate branco. Pão de ló branco. Cobertura chantilly e detalhes em ganache de chocolate branco.",
+    "image": "/static/images/Sublime.jpg",
+    "base_price": 0.00,
+    "bestseller": False,
+    "options": {
+      "tamanho": [
+        { "label": "1.0 kg", "extra": 119.00 },
+        { "label": "1.5 kg", "extra": 178.50 },
+        { "label": "2.0 kg", "extra": 238.00 },
+        { "label": "3.0 kg", "extra": 357.00 }
+      ], 
+      "type": "single"
+    },
+  },
+
+  {
+    "id": 7,
+    "category": "Tortas",
+    "name": "Baba de Moça",
+    "description": "Recheio baba de moça. Cobertura de chantilly. Massa de pão de ló branco.",
+    "image": "/static/images/BabaMoca.jpg",
+    "base_price": 0.00,
+    "bestseller": True,
+    "options": {
+      "tamanho": [
+        { "label": "1.0 kg", "extra": 94.00 },
+        { "label": "1.5 kg", "extra": 141.00 },
+        { "label": "2.0 kg", "extra": 188.00 },
+        { "label": "3.0 kg", "extra": 282.00 }
       ], 
       "type": "single"
     }
   },
+
   {
-    "id": 3,
+    "id": 8,
+    "category": "Tortas",
+    "name": "Baba de Moça com Abacaxi",
+    "description": "Recheio Baba de moça e creme de abacaxi. Cobertura de marshmallow mesclado. Massa de pão de ló branco.",
+    "image": "/static/images/BabaMocaAbacaxi.jpg",
+    "base_price": 0.00,
+    "bestseller": True,
+    "options": {
+      "tamanho": [
+        { "label": "1.0 kg", "extra": 94.00 },
+        { "label": "1.5 kg", "extra": 141.00 },
+        { "label": "2.0 kg", "extra": 188.00 },
+        { "label": "3.0 kg", "extra": 282.00 }
+      ], 
+      "type": "single"
+    }
+  },
+  
+  {
+    "id": 9,
+    "category": "Tortas",
+    "name": "Amor Perfeito",
+    "description": "Recheio de creme de coco, creme de brigadeiro e mousse de chocolate. Cobertura de Ganache, brigadeiro e beijinho de coco. Massa de pão de ló de chocolate.",
+    "image": "/static/images/AmorPerfeito.jpg",
+    "base_price": 0.00,
+    "bestseller": False,
+    "options": {
+      "tamanho": [
+        { "label": "1.0 kg", "extra": 95.00 },
+        { "label": "1.5 kg", "extra": 142.50 },
+        { "label": "2.0 kg", "extra": 190.00 },
+        { "label": "3.0 kg", "extra": 285.00 }
+      ], 
+      "type": "single"
+    }
+  },
+
+  {
+    "id": 10,
+    "category": "Tortas",
+    "name": "Torta de Brigadeiro",
+    "description": "Recheio de creme de brigadeiro. Cobertura de creme trufado de chocolate meio amargo, chocolate granulado e brigadeiros. Massa de pão de ló de chocolate.",
+    "image": "/static/images/TortaBrigadeiro.jpg",
+    "base_price": 0.00,
+    "bestseller": True,
+    "options": {
+      "tamanho": [
+        { "label": "1.0 kg", "extra": 94.00 },
+        { "label": "1.5 kg", "extra": 141.00 },
+        { "label": "2.0 kg", "extra": 188.00 },
+        { "label": "3.0 kg", "extra": 282.00 }
+      ], 
+      "type": "single"
+    }
+  },
+
+  {
+    "id": 11,
+    "category": "Tortas",
+    "name": "Floresta Negra",
+    "description": "Recheio de chantilly com cereja. Cobertura de chantilly, chocolate em raspas e cerejas. Massa pão de ló de chocolate.",
+    "image": "/static/images/FlorestaNegra.jpg",
+    "base_price": 0.00,
+    "bestseller": True,
+    "options": {
+      "tamanho": [
+        { "label": "1.0 kg", "extra": 94.00 },
+        { "label": "1.5 kg", "extra": 141.00 },
+        { "label": "2.0 kg", "extra": 188.00 },
+        { "label": "3.0 kg", "extra": 282.00 }
+      ], 
+      "type": "single"
+    }
+  },
+
+  {
+    "id": 12,
+    "category": "Tortas",
+    "name": "Torta de Limão",
+    "description": "Recheio de creme de limão, chantilly e suspiros. Cobertura de chantilly e creme de limão. Massa pão de ló.",
+    "image": "/static/images/TortaLimao.jpg",
+    "base_price": 0.00,
+    "bestseller": False,
+    "options": {
+      "tamanho": [
+        { "label": "1.0 kg", "extra": 94.00 },
+        { "label": "1.5 kg", "extra": 141.00 },
+        { "label": "2.0 kg", "extra": 188.00 },
+        { "label": "3.0 kg", "extra": 282.00 }
+      ], 
+      "type": "single"
+    }
+  },
+
+  {
+    "id": 13,
+    "category": "Tortas",
+    "name": "Torta de Nozes",
+    "description": "Recheio de creme de nozes, creme trufado de chocolate meio amargo e praliné de castanha do caju. Cobertura de creme ganache e nozes. Massa pão de ló de chocolate.",
+    "image": "/static/images/PlaceHolder.jpg",
+    "base_price": 0.00,
+    "bestseller": False,
+    "options": {
+      "tamanho": [
+        { "label": "1.0 kg", "extra": 119.00 },
+        { "label": "1.5 kg", "extra": 178.50 },
+        { "label": "2.0 kg", "extra": 238.00 },
+        { "label": "3.0 kg", "extra": 357.00 }
+      ], 
+      "type": "single"
+    }
+  },
+
+  {
+    "id": 14,
+    "category": "Tortas",
+    "name": "Torta prestígio mesclada",
+    "description": "Recheio de creme de coco. Cobertura de marshmallow mesclado com calda de chocolate. Massa pão de ló de chocolate.",
+    "image": "/static/images/PrestigioMesclada.jpg",
+    "base_price": 00.00,
+    "bestseller": True,
+    "options": {
+      "tamanho": [
+        { "label": "1.0 kg", "extra": 94.00 },
+        { "label": "1.5 kg", "extra": 141.00 },
+        { "label": "2.0 kg", "extra": 188.00 },
+        { "label": "3.0 kg", "extra": 282.00 }
+      ], 
+      "type": "single"
+    }
+  },
+
+  {
+    "id": 15,
+    "category": "Tortas",
+    "name": "Torta Brigadeiro com Mousse",
+    "description": "Recheio de creme de brigadeiro com mousse de chocolate. Cobertura de mousse de chocolate, creme trufado e creme de brigadeiro. Massa pão de ló de chocolate.",
+    "image": "/static/images/BrigadeiroMousse.jpg",
+    "base_price": 0.00,
+    "bestseller": False,
+    "options": {
+      "tamanho": [
+        { "label": "1.0 kg", "extra": 94.00 },
+        { "label": "1.5 kg", "extra": 141.00 },
+        { "label": "2.0 kg", "extra": 188.00 },
+        { "label": "3.0 kg", "extra": 282.00 }
+      ], 
+      "type": "single"
+    }
+  },
+
+  {
+    "id": 16,
+    "category": "Tortas",
+    "name": "Massa amanteigada, creme de limão e merengue.",
+    "description": "Massa amanteigada, creme de limão e merengue.",
+    "image": "/static/images/MerengueLimao.jpg",
+    "base_price": 0.00,
+    "bestseller": False,
+    "options": {
+      "tamanho": [
+        { "label": "1.0 kg", "extra": 92.00 },
+        { "label": "1.5 kg", "extra": 138.00 }
+      ], 
+      "type": "single"
+    }
+  },
+
+  {
+    "id": 17,
+    "category": "Tortas",
+    "name": "Lia",
+    "description": "Recheio baba de moça, creme de ameixa e creme de abacaxi. Cobertura: chantilly. Massa: pão de ló.",
+    "image": "/static/images/PlaceHolder.jpg",
+    "base_price": 0.00,
+    "bestseller": False,
+    "options": {
+      "tamanho": [
+        { "label": "1.0 kg", "extra": 94.00 },
+        { "label": "1.5 kg", "extra": 141.00 },
+        { "label": "2.0 kg", "extra": 188.00 },
+        { "label": "3.0 kg", "extra": 282.00 }
+      ], 
+      "type": "single"
+    }
+  },
+
+  {
+    "id": 18,
+    "category": "Tortas",
+    "name": "Torta Ninho com Frutas do Bosque",
+    "description": "R: Creme de ninho e variegato de frutas do bosque C:Chantilly e leite em pó c/ frutas do bosque M: Pão de ló branco",
+    "image": "/static/images/TortaNinhoBosque.jpg",
+    "base_price": 0.00,
+    "bestseller": True,
+    "options": {
+      "tamanho": [
+        { "label": "1.0 kg", "extra": 95.00 },
+        { "label": "1.5 kg", "extra": 142.50 },
+        { "label": "2.0 kg", "extra": 190.00 },
+        { "label": "3.0 kg", "extra": 285.00 }
+      ], 
+      "type": "single"
+    }
+  },
+
+  {
+    "id": 19,
     "category": "Bolos",
     "name": "Bolo inteiro",
     "description": "10 fantásticas opções de recheios de bolo!",
     "image": "/static/images/PlaceHolder.jpg",
     "base_price": 0.00,
-    "bestseller": False,
+    "bestseller": True,
     "options": {
       "sabores": [
         { "label": "Bolo de mandioca (1kg)", "extra": 42.00 },
@@ -159,8 +455,9 @@ def seed_sample_data(conn):
       "type": "multiple"
     }
   }, 
+
   {
-    "id": 4,
+    "id": 20,
     "category": "Doces",
     "name": "Bombons",
     "description": "Bombom é um doce constituído basicamente por um recheio e recoberto por uma camada de chocolate ou glacê. Foto ilustrativa. Os bombons são vendidos em forminhas brancas simples.",
@@ -180,14 +477,153 @@ def seed_sample_data(conn):
       "type": "multiple"
     }
   },
+
   {
-    "id": 5,
+    "id": 21,
+    "category": "Doces",
+    "name": "Docinhos",
+    "description": "Pequeno doce confeitado, servido em fôrmas de papel.",
+    "image": "/static/images/Docinhos.jpg",
+    "base_price": 0.00,
+    "bestseller": True,
+    "options": {
+      "sabores": [
+        { "label": "Brigadeiro (25 un)", "extra": 26.25 },
+        { "label": "Beijinho de Coco (25 un)", "extra": 26.25 },
+        { "label": "Beijinho de Leite Ninho (25 un)", "extra": 31.50 },
+        { "label": "Olho de Sogra (25 un)", "extra": 26.25 },
+        { "label": "Cajuzinho (25 un)", "extra": 26.25 },
+        { "label": "Casadinho (25 un)", "extra": 31.50 },
+        { "label": "Croissant de Banana (25 un)", "extra": 32.25 },
+        { "label": "Croissant de Goiaba", "extra": 34.75 },
+        { "label": "Croissant de Maça (25 un)", "extra": 32.25 },
+        { "label": "Tartelette de Morango (25 un)", "extra": 38.50 },
+        { "label": "Tartelette de Limão (25 un)", "extra": 38.50 },
+        { "label": "Tartelette de Nozes (25 un)", "extra": 42.25 },
+        { "label": "Tartelette de Sonho de Valsa (25 un)", "extra": 38.50 },
+        { "label": "Bombinhas de Chocolate (25 un)", "extra": 40.00 },
+        { "label": "Bombinhas de Creme (25 un)", "extra": 40.00 },
+        { "label": "Quindim (25 un)", "extra": 40.00 },
+        { "label": "Mini Churros (25 un)", "extra": 25.00 }
+      ], 
+      "type": "multiple"
+    }
+  },
+
+  {
+    "id": 22,
+    "category": "Doces",
+    "name": "Pudim",
+    "description": "Pequeno doce confeitado, servido em fôrmas de papel.",
+    "image": "/static/images/PlaceHolder.jpg",
+    "base_price": 0.00,
+    "bestseller": True,
+    "options": {
+      "sabores": [
+        { "label": "Pudim Grande", "extra": 120.00 }
+      ], 
+      "type": "single"
+    }
+  },
+
+  {
+    "id": 23,
+    "category": "Salgados",
+    "name": "Tortas Salgadas",
+    "description": "Deliciosas tortas salgadas em diversos sabores.",
+    "image": "/static/images/TortasSalgadas.jpg",
+    "base_price": 0.00,
+    "bestseller": False,
+    "options": {
+      "sabores": [
+        { "label": "Legumes (1 kg)", "extra": 89.00 },
+        { "label": "Empadão de Frango (1 kg)", "extra": 99.00 },
+        { "label": "Empadão de Franco com Catupiry (1 kg)", "extra": 99.00 },
+        { "label": "Empadão de Palmito (1 kg)", "extra": 99.00 },
+        { "label": "Empadão de Camarão (1 kg)", "extra": 109.00 }
+      ], 
+      "type": "multiple"
+    }
+  },
+
+  {
+    "id": 24,
+    "category": "Salgados",
+    "name": "Salgados Fritos",
+    "description": "Para comprar um cento (100 un), basta selecionar o mesmo sabor 4 vezes.",
+    "image": "/static/images/SalgadosFritos.jpg",
+    "base_price": 0.00,
+    "bestseller": True,
+    "options": {
+      "sabores": [
+        { "label": "Coxinha de Frango (25 un)", "extra": 22.00 },
+        { "label": "Coxinha de Frango com Catupiry (25 un)", "extra": 24.00 },
+        { "label": "Risole de Carne (25 un)", "extra": 24.75 },
+        { "label": "Risole de Milho (25 un)", "extra": 21.00 },
+        { "label": "Risole de Queijo (25 un)", "extra": 24.75 },
+        { "label": "Risole Napolitano (25 un)", "extra": 24.75 },
+        { "label": "Enroladinho de Salsicha (25 un)", "extra": 19.75 },
+        { "label": "Quibe (25 un)", "extra": 24.75 },
+        { "label": "Quibe com Catupiry (25 un)", "extra": 24.75 },
+        { "label": "Maravilha de Queijo (25 un)", "extra": 27.25 },
+        { "label": "Croquete de Carne (25 un)", "extra": 21.00 },
+        { "label": "Croquete de Carne com Provolone (25 un)", "extra": 29.00 },
+        { "label": "Croquete de Frango (25 un)", "extra": 21.00 },
+        { "label": "Croquete de Bacalhau (25 un)", "extra": 39.75 }
+      ], 
+      "type": "multiple"
+    }
+  },
+
+  {
+    "id": 25,
+    "category": "Salgados",
+    "name": "Salgados Assados",
+    "description": "Para comprar um cento (100 un), basta selecionar o mesmo sabor 4 vezes.",
+    "image": "/static/images/SalgadosAssados.jpg",
+    "base_price": 0.00,
+    "bestseller": True,
+    "options": {
+      "sabores": [
+        { "label": "Enroladinho de Salsicha Assado (25 un)", "extra": 22.25 },
+        { "label": "Enroladinho de Queijo (25 un)", "extra": 31.50 },
+        { "label": "Esfiha de Carne (25 un)", "extra": 31.50 },
+        { "label": "Esfiha de Frango (25 un)", "extra": 24.75 },
+        { "label": "Pão Pizza (25 un)", "extra": 31.50 },
+        { "label": "Pão da Vovó (25 un)", "extra": 31.50 },
+        { "label": "Empanada de Frango (25 un)", "extra": 24.75 },
+        { "label": "Empanada de Camarão (25 un)", "extra": 29.75 },
+        { "label": "Empanada de Palmito (25 un)", "extra": 27.25 },
+        { "label": "Pastel Assado de Presunto (25 un)", "extra": 29.75 },
+        { "label": "Pastel Assado de Frango (25 un)", "extra": 29.75 },
+        { "label": "Croissant de Frango (25 un)", "extra": 32.25 },
+        { "label": "Croissant de Presunto (25 un)", "extra": 32.25 },
+        { "label": "Folhado de Frango (25 un)", "extra": 32.25 },
+        { "label": "Folhado de Presunto (25 un)", "extra": 32.25 },
+        { "label": "Folhado de Queijo (25 un)", "extra": 29.75 },
+        { "label": "Folhado de Bacon com Fios de Ovos (25 un)", "extra": 34.75 },
+        { "label": "Folhado de Bacom com Ameixa (25 un)", "extra": 34.75 },
+        { "label": "Tartelette de Frango com Azeitona (25 un)", "extra": 29.75 },
+        { "label": "Tartelette de Presunto (25 un)", "extra": 29.75 },
+        { "label": "Barquete com Salpicão (25 un)", "extra": 44.75 },
+        { "label": "Barquete com Presunto (25 un)", "extra": 42.25 },
+        { "label": "Barquete com Queijo (25 un)", "extra": 42.25 },
+        { "label": "Barquete com Frango (25 un)", "extra": 42.25 },
+        { "label": "Chipa (500 gramas)", "extra": 44.95 },
+        { "label": "Pão de Queijo (500 gramas)", "extra": 43.45 }
+      ], 
+      "type": "multiple"
+    }
+  },
+
+  {
+    "id": 26,
     "category": "Salgados",
     "name": "Mini Sanduíches",
     "description": "Para comprar um cento (100 un), basta selecionar o mesmo sabor 4 vezes.",
     "image": "/static/images/MiniSanduiches.jpg",
     "base_price": 0.00,
-    "bestseller": True,
+    "bestseller": False,
     "options": {
       "sabores": [
         { "label": "Frango (25 un)", "extra": 39.75 },
@@ -199,19 +635,148 @@ def seed_sample_data(conn):
       "type": "multiple"
     }
   },
+
   {
-    "id": 6,
+    "id": 27,
+    "category": "Salgados",
+    "name": "Mini Pizza Pré-Assada",
+    "description": "Para comprar um cento (100 un), basta selecionar o mesmo sabor 4 vezes. Produto pré assado.",
+    "image": "/static/images/MiniPizza.jpg",
+    "base_price": 0.00,
+    "bestseller": False,
+    "options": {
+      "sabores": [
+        { "label": "Muçarela com Azeitona (25 un)", "extra": 32.25 },
+        { "label": "Frango (25 un)", "extra": 32.25 },
+        { "label": "Muçarela (25 un)", "extra": 32.25 },
+        { "label": "Presunto (25 un)", "extra": 32.25 }
+      ], 
+      "type": "multiple"
+    }
+  },
+
+  {
+    "id": 28,
+    "category": "Salgados",
+    "name": "Pão de Queijo",
+    "image": "/static/images/PaoQueijo.jpg",
+    "base_price": 0.00,
+    "bestseller": True,
+    "options": {
+      "sabores": [
+        { "label": "0.5 kg", "extra": 43.45 },
+        { "label": "1.0 kg", "extra": 86.90 },
+        { "label": "1.5 kg", "extra": 130.35 },
+        { "label": "2.0 kg", "extra": 173.80 }
+      ], 
+      "type": "single"
+    }
+  },
+
+  {
+    "id": 29,
+    "category": "Salgados",
+    "name": "Chipa",
+    "image": "/static/images/Chipa.jpg",
+    "base_price": 0.00,
+    "bestseller": False,
+    "options": {
+      "sabores": [
+        { "label": "0.5 kg", "extra": 44.95 },
+        { "label": "1.0 kg", "extra": 89.90 },
+        { "label": "1.5 kg", "extra": 134.85 },
+        { "label": "2.0 kg", "extra": 179.80 }
+      ], 
+      "type": "single"
+    }
+  },
+
+  {
+    "id": 30,
     "category": "Bebidas",
-    "name": "Coca-cola 2L",
+    "name": "Coca-cola (2 Litros)",
     "image": "/static/images/CocaCola.jpg",
     "base_price": 14.90,
     "bestseller": True
   },
+
   {
-    "id": 7,
+    "id": 31,
     "category": "Bebidas",
-    "name": "Suco de Caju (1 litro)",
+    "name": "Coca-cola Zero (2 Litros)",
+    "image": "/static/images/CocaZero.jpg",
+    "base_price": 14.90,
+    "bestseller": True
+  },
+
+  {
+    "id": 32,
+    "category": "Bebidas",
+    "name": "Fanta Laranja (2 Litros)",
+    "image": "/static/images/FantaLaranja.jpg",
+    "base_price": 14.90,
+    "bestseller": False
+  },
+
+  {
+    "id": 33,
+    "category": "Bebidas",
+    "name": "Sprite (2 Litros)",
+    "image": "/static/images/Sprite.jpg",
+    "base_price": 14.90,
+    "bestseller": False
+  },
+
+  {
+    "id": 34,
+    "category": "Bebidas",
+    "name": "Guaraná Antárctica (2 Litros)",
+    "image": "/static/images/Guarana.jpg",
+    "base_price": 14.90,
+    "bestseller": True
+  },
+
+  {
+    "id": 35,
+    "category": "Bebidas",
+    "name": "Guaraná Antárctica Zero (2 Litros)",
+    "image": "/static/images/GuaranaZero.jpg",
+    "base_price": 14.90,
+    "bestseller": False
+  },
+
+  {
+    "id": 36,
+    "category": "Bebidas",
+    "name": "Suco Del Valle de Abacaxi (1 Litro)",
+    "image": "/static/images/SucoAbacaxi.jpg",
+    "base_price": 10.90,
+    "bestseller": False
+  },
+
+  {
+    "id": 37,
+    "category": "Bebidas",
+    "name": "Suco Del Valle de Manga (1 Litro)",
+    "image": "/static/images/SucoManga.jpg",
+    "base_price": 10.90,
+    "bestseller": False
+  },
+
+  {
+    "id": 38,
+    "category": "Bebidas",
+    "name": "Suco Del Valle de Caju (1 Litro)",
     "image": "/static/images/SucoCaju.jpg",
+    "base_price": 10.90,
+    "bestseller": False
+  },
+
+  {
+    "id": 39,
+    "category": "Bebidas",
+    "name": "Suco Del Valle de Pêssego (1 litro)",
+    "image": "/static/images/SucoPessego.jpg",
     "base_price": 10.90,
     "bestseller": False
   }
@@ -271,6 +836,39 @@ def api_menu():
     conn.close()
     return jsonify({'menu': items})
 
+@app.route('/api/categories')
+def api_categories():
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute('SELECT DISTINCT category FROM menu_items WHERE category IS NOT NULL ORDER BY category')
+    categories = [row[0] for row in cur.fetchall()]
+    conn.close()
+    return jsonify({'categories': categories})
+
+@app.route('/api/category/<category_name>')
+def api_category(category_name):
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM menu_items WHERE category = ?', (category_name,))
+    items = [row_to_dict(r) for r in cur.fetchall()]
+    
+    for it in items:
+        cur.execute('SELECT id, `key`, type FROM option_groups WHERE menu_item_id = ?', (it['id'],))
+        groups = [row_to_dict(g) for g in cur.fetchall()]
+        opts_struct = {}
+        for g in groups:
+            cur.execute('SELECT id, name, price_modifier FROM options WHERE option_group_id = ?', (g['id'],))
+            choices = []
+            for o in cur.fetchall():
+                oo = dict(o)
+                choices.append({'id': oo['id'], 'label': oo['name'], 'extra': oo['price_modifier']})
+            opts_struct[g['key']] = {'type': g['type'], 'choices': choices}
+        it['options'] = opts_struct
+        it['bestseller'] = bool(it.get('bestseller'))
+    
+    conn.close()
+    return jsonify({'items': items, 'category': category_name})
+
 @app.route('/api/best_sellers')
 def api_best_sellers():
     conn = get_db()
@@ -282,6 +880,32 @@ def api_best_sellers():
         items.append(row)
     conn.close()
     return jsonify({'best_sellers': items})
+
+@app.route('/api/best_sellers_categories')
+def api_best_sellers_categories():
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute('''SELECT DISTINCT m.category FROM best_sellers b 
+                   JOIN menu_items m ON b.menu_item_id = m.id 
+                   WHERE m.category IS NOT NULL ORDER BY m.category''')
+    categories = [row[0] for row in cur.fetchall()]
+    conn.close()
+    return jsonify({'categories': categories})
+
+@app.route('/api/best_sellers_category/<category_name>')
+def api_best_sellers_category(category_name):
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute('''SELECT m.*, b.count FROM best_sellers b 
+                   JOIN menu_items m ON b.menu_item_id = m.id 
+                   WHERE m.category = ? 
+                   ORDER BY b.count DESC''', (category_name,))
+    items = []
+    for r in cur.fetchall():
+        row = row_to_dict(r)
+        items.append(row)
+    conn.close()
+    return jsonify({'items': items, 'category': category_name})
 
 @app.route('/api/create_cart', methods=['POST'])
 def api_create_cart():
@@ -511,4 +1135,5 @@ def api_message():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
